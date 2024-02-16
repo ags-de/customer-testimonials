@@ -19,9 +19,11 @@ pub struct Status {
     source_status: HashMap<Option<Source>, TestimonialStatus>,
 }
 
-pub struct Customer {
-    name: String,
-    logo: String,
+#[derive(Debug)]
+pub struct Consent {
+    name_consent: NameConsent<Testimonial::name, bool>,
+    content_consent: ContentConsent<Testimonial::content, bool>,
+    logo_consent: LogoConsent<Customer::logo, bool>,
 }
 
 pub struct Testimonial {
@@ -30,6 +32,7 @@ pub struct Testimonial {
     date: String,
     initial_sources: Option<Vec<Source>>,
     status: Status,
+    consent: Consent,
 }
 
 impl Testimonial {
