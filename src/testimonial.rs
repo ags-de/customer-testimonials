@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use crate::customer;
 
 #[derive(Debug)]
 pub enum TestimonialStatus {
@@ -23,7 +24,7 @@ pub struct Status {
 pub struct Consent {
     name_consent: NameConsent<Testimonial::name, bool>,
     content_consent: ContentConsent<Testimonial::content, bool>,
-    logo_consent: LogoConsent<Customer::logo, bool>,
+    logo_consent: LogoConsent<customer::Customer::logo, bool>,
 }
 
 pub struct Testimonial {

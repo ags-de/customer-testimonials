@@ -1,4 +1,6 @@
 mod testimonial;
+mod customer;
+
 use testimonial as ts;
 
 fn main() {
