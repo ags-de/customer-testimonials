@@ -4,7 +4,7 @@ mod customer;
 use testimonial as ts;
 
 fn main() {
-    let mut testimonial1 = ts::Testimonial::new(
+    let mut testimonial1 = customer::Customer::create_testimonial(
         String::from("John"),
         String::from("Great product!"),
         String::from("2024-02-16"),

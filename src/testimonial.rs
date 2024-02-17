@@ -1,5 +1,4 @@
 use std::collections::HashMap;
-use crate::customer;
 
 #[derive(Debug)]
 pub enum TestimonialStatus {
@@ -22,9 +21,9 @@ pub struct Status {
 
 #[derive(Debug)]
 pub struct Consent {
-    name_consent: NameConsent<Testimonial::name, bool>,
-    content_consent: ContentConsent<Testimonial::content, bool>,
-    logo_consent: LogoConsent<customer::Customer::logo, bool>,
+    name_consent: HashMap<String, bool>,
+    content_consent: HashMap<String, bool>,
+    logo_consent: HashMap<String, bool>,
 }
 
 pub struct Testimonial {
@@ -37,7 +36,7 @@ pub struct Testimonial {
 }
 
 impl Testimonial {
-    pub fn new(name: String, content: String, date: String, sources: Option<Vec<Source>>) -> Testimonial {
+/*     pub fn new(name: String, content: String, date: String, sources: Option<Vec<Source>>, consent: Consent) -> Testimonial {
         let mut source_status = HashMap::new();
         if let Some(sources) = &sources {
             for source in sources {
@@ -53,8 +52,9 @@ impl Testimonial {
             status: Status {
                 source_status,
             },
+            consent,
         }
-    }
+    } */
 
     pub fn update_status(&mut self) {
         if let Some(sources) = &self.initial_sources {
