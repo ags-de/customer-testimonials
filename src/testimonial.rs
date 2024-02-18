@@ -16,7 +16,7 @@ pub enum Source {
 
 #[derive(Debug)]
 pub struct Status {
-    source_status: HashMap<Option<Source>, TestimonialStatus>,
+    pub source_status: HashMap<Option<Source>, TestimonialStatus>,
 }
 
 #[derive(Debug)]
@@ -27,16 +27,16 @@ pub struct Consent {
 }
 
 pub struct Testimonial {
-    name: String,
-    content: String,
-    date: String,
-    initial_sources: Option<Vec<Source>>,
-    status: Status,
-    consent: Consent,
+    pub name: String,
+    pub content: String,
+    pub date: String,
+    pub initial_sources: Option<Vec<Source>>,
+    pub status: Status,
+    pub consent: Consent,
 }
 
 impl Testimonial {
-/*     pub fn new(name: String, content: String, date: String, sources: Option<Vec<Source>>, consent: Consent) -> Testimonial {
+    pub fn new(name: String, content: String, date: String, sources: Option<Vec<Source>>, consent: Consent) -> Testimonial {
         let mut source_status = HashMap::new();
         if let Some(sources) = &sources {
             for source in sources {
@@ -54,7 +54,7 @@ impl Testimonial {
             },
             consent,
         }
-    } */
+    }
 
     pub fn update_status(&mut self) {
         if let Some(sources) = &self.initial_sources {

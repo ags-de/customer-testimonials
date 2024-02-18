@@ -1,9 +1,10 @@
 use std::collections::HashMap;
-use crate::testimonial::TestimonialStatus;
-use crate::testimonial::Testimonial;
-use crate::testimonial::Source;
+
 use crate::testimonial::Consent;
+use crate::testimonial::Source;
 use crate::testimonial::Status;
+use crate::testimonial::Testimonial;
+use crate::testimonial::TestimonialStatus;
 
 pub struct Customer {
     name: String,
