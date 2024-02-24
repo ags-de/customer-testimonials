@@ -37,24 +37,18 @@ pub struct Testimonial {
 
 impl Testimonial {
     pub fn new(name: String, content: String, date: String, source: Source, consents: Option<Vec<Consent>>) -> Testimonial {
-        let mut consentst = HashMap::new();
-        if let Some(consents) = &consents {
-            for consent in consents {
-                consentst.insert(Some(consent.clone()), false);
-            }
-        }
-
-        Testimonial {
+        let mut testimonial = Testimonial {
             name,   
             content,
             date,
             source,
             initial_consents: consents,
             consent_status: ConsentStatus {
-                consentst,
+                consentst: HashMap::new(),
             },
-
-        }
+        };
+        testimonial.update_consent();
+        testimonial
     }
 
     pub fn update_consent(&mut self) {
@@ -66,6 +60,7 @@ impl Testimonial {
             }
         }
     }
+
 
     pub fn display_consent(&self) {
         println!("Testimonial: {}", self.name);
