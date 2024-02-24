@@ -23,7 +23,7 @@ pub enum Consent {
 
 #[derive(Debug)]
 pub struct ConsentStatus {
-    pub source_status: HashMap<Option<Consent>, bool>,
+    pub consentst: HashMap<Option<Consent>, bool>,
 }
 
 pub struct Testimonial {
@@ -31,16 +31,16 @@ pub struct Testimonial {
     content: String,
     date: String,
     source: Source,
-    initial_consent: Option<Vec<Consent>>,
+    initial_consents: Option<Vec<Consent>>,
     consent_status: ConsentStatus,
 }
 
 impl Testimonial {
     pub fn new(name: String, content: String, date: String, source: Source, consents: Option<Vec<Consent>>) -> Testimonial {
-        let mut consent_status = HashMap::new();
+        let mut consentst = HashMap::new();
         if let Some(consents) = &consents {
             for consent in consents {
-                consent_status.insert(Some(consent.clone()), false);
+                consentst.insert(Some(consent.clone()), false);
             }
         }
 
@@ -49,37 +49,19 @@ impl Testimonial {
             content,
             date,
             source,
-            initial_consent: Option<Vec<Consent>>,
-            status: ConsentStatus {
-                consent_status,
+            initial_consents: consents,
+            consent_status: ConsentStatus {
+                consentst,
             },
 
         }
     }
 
-    pub fn update_status(&mut self) {
-        if let Some(sources) = &self.initial_sources {
-            for source in sources {
-                if let Some(status) = self.status.source_status.get_mut(&Some(source.clone())) {
-                    *status = TestimonialStatus::Active;
-                }
-            }
-        }
-    }
-
-    pub fn display_status(&self) {
-        println!("Testimonial: {}", self.name);
-        for source in &[Source::WebsiteURL, Source::Facebook, Source::Instagram, Source::X] {
-            let status = self.status.source_status.get(&Some(source.clone())).unwrap_or(&TestimonialStatus::Inactive);
-            println!("{:?}: {:?}", source, status);
-        }
-    }
-
     pub fn update_consent(&mut self) {
-        if let Some(sources) = &self.initial_sources {
-            for source in sources {
-                if let Some(status) = self.status.source_status.get_mut(&Some(source.clone())) {
-                    *status = TestimonialStatus::Active;
+        if let Some(consents) = &self.initial_consents {
+            for consent in consents {
+                if let Some(consent_status) = self.consent_status.consentst.get_mut(&Some(consent.clone())) {
+                    *consent_status = true;
                 }
             }
         }
@@ -87,9 +69,9 @@ impl Testimonial {
 
     pub fn display_consent(&self) {
         println!("Testimonial: {}", self.name);
-        for source in &[Source::WebsiteURL, Source::Facebook, Source::Instagram, Source::X] {
-            let status = self.status.source_status.get(&Some(source.clone())).unwrap_or(&TestimonialStatus::Inactive);
-            println!("{:?}: {:?}", source, status);
+        for consent in &[Consent::NameConsent, Consent::ContentConsent, Consent::LogoConsent] {
+            let consent_status = self.consent_status.consentst.get(&Some(consent.clone())).unwrap_or(&false);
+            println!("{:?}: {:?}", consent, consent_status);
         }
     }
 }
