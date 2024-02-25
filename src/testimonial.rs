@@ -31,8 +31,7 @@ pub struct Testimonial {
     content: String,
     date: String,
     source: Source,
-    initial_consents: Option<Vec<Consent>>,
-    consent_status: ConsentStatus,
+    pub consent_status: ConsentStatus,
 }
 
 impl Testimonial {
@@ -42,17 +41,16 @@ impl Testimonial {
             content,
             date,
             source,
-            initial_consents: consents,
             consent_status: ConsentStatus {
                 consentst: HashMap::new(),
             },
         };
-        testimonial.update_consent();
+        testimonial.update_consent(&consents);
         testimonial
     }
 
-    pub fn update_consent(&mut self) {
-        if let Some(consents) = &self.initial_consents {
+    pub fn update_consent(&mut self, consents: &Option<Vec<Consent>>) {
+        if let Some(consents) = consents {
             for consent in consents {
                 if let Some(consent_status) = self.consent_status.consentst.get_mut(&Some(consent.clone())) {
                     *consent_status = true;
@@ -60,7 +58,6 @@ impl Testimonial {
             }
         }
     }
-
 
     pub fn display_consent(&self) {
         println!("Testimonial: {}", self.name);
