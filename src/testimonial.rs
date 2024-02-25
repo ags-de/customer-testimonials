@@ -45,21 +45,23 @@ impl Testimonial {
                 consentst: HashMap::new(),
             },
         };
-        testimonial.update_consent(&consents);
+        testimonial.add_consents(&consents);
         testimonial
     }
 
-    pub fn update_consent(&mut self, consents: &Option<Vec<Consent>>) {
+    pub fn add_consents(&mut self, consents: &Option<Vec<Consent>>) {
         if let Some(consents) = consents {
             for consent in consents {
                 if let Some(consent_status) = self.consent_status.consentst.get_mut(&Some(consent.clone())) {
                     *consent_status = true;
+                } else {
+                    self.consent_status.consentst.insert(Some(consent.clone()), true);
                 }
             }
-        }
+        }    
     }
 
-    pub fn display_consent(&self) {
+    pub fn display_consents(&self) {
         println!("Testimonial: {}", self.name);
         for consent in &[Consent::NameConsent, Consent::ContentConsent, Consent::LogoConsent] {
             let consent_status = self.consent_status.consentst.get(&Some(consent.clone())).unwrap_or(&false);
